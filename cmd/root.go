@@ -25,7 +25,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var cfgFile string
+var required bool
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -33,7 +33,7 @@ var rootCmd = &cobra.Command{
 	Short: "Generate CR example YAML from CRD",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(generateCR(args[0]))
+		fmt.Println(generateCR(args[0], required))
 	},
 }
 
@@ -47,13 +47,14 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.PersistentFlags().BoolVarP(&required, "required", "r", false, "output only required vavlues")
 	cobra.OnInitialize(initConfig)
 }
 
 func initConfig() {
 }
 
-func generateCR(name string) (string, error) {
+func generateCR(name string, required bool) (string, error) {
 	unstructured, err := kube.GetUnstructeredCRD(name)
 	if err != nil {
 		return "", err
@@ -64,7 +65,7 @@ func generateCR(name string) (string, error) {
 		return "", err
 	}
 
-	cr := parse.GenerateCR(*crd)
+	cr := parse.GenerateCR(*crd, required)
 
 	crYaml, err := yaml.CRYaml(*cr)
 	if err != nil {
