@@ -15,7 +15,10 @@ limitations under the License.
 */
 package main
 
-import "github.com/sahil-lakhwani/kubectl-creyaml/cmd"
+import (
+	"github.com/sahil-lakhwani/kubectl-creyaml/cmd"
+	_ "k8s.io/client-go/plugin/pkg/client/auth"
+)
 
 func main() {
 	cmd.Execute()
