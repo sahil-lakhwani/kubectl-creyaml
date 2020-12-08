@@ -16,3 +16,6 @@
 
 # VSCode folder
 .vscode
+
+# binary output
+kubectl-creyaml
