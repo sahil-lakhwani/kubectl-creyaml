@@ -33,7 +33,12 @@ var rootCmd = &cobra.Command{
 	Short: "Generate CR example YAML from CRD",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(generateCR(args[0], required))
+		o, err := generateCR(args[0], required)
+		if err != nil {
+			fmt.Printf("Error in generating example: %s\n", err.Error())
+			return
+		}
+		fmt.Print(o)
 	},
 }
 
