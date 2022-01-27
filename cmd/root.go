@@ -52,7 +52,7 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.PersistentFlags().BoolVarP(&required, "required", "r", false, "output only required vavlues")
+	rootCmd.PersistentFlags().BoolVarP(&required, "required", "r", false, "output only required values")
 	cobra.OnInitialize(initConfig)
 }
 
